@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A transparent 3D print pricing calculator that breaks down every cost component — material, machine overhead, post-processing, and delivery — so clients know exactly what they are paying for.">
+    <meta name="robots" content="index, follow">
+    <title>3D Print Pricing Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>3D Print Pricing</h1>
+            <div class="toggle-container">
+                <span class="toggle-label">Simple View</span>
+                <label class="switch">
+                    <input type="checkbox" id="view-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Detailed View</span>
+            </div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">
+                    <!-- Sun Icon (default for light mode) -->
+                    <svg id="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="job-inputs">
+                <h2>Job Parameters</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="print-hours">Print Time (Hours)</label>
+                        <input type="number" id="print-hours" value="5" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="filament-used">Filament Used (g)</label>
+                        <input type="number" id="filament-used" value="150" min="0" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="prep-time">Prep Time (Hours)</label>
+                        <input type="number" id="prep-time" value="0.5" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="post-time">Post-Production (Hours)</label>
+                        <input type="number" id="post-time" value="1" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="design-time">Design Time (Hours)</label>
+                        <input type="number" id="design-time" value="0" min="0" step="0.1">
+                    </div>
+                </div>
+            </section>
+
+            <section class="formula-visualizer">
+                <!-- Simple View -->
+                <div id="simple-formula" class="formula-view active">
+                    <div class="formula-row">
+                        <div class="bracket-group">
+                            <div class="formula-block" data-target="material-details">
+                                <span class="block-title">Material Cost</span>
+                                <span class="block-value" id="val-simple-material">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="machine-details">
+                                <span class="block-title">Machine Cost</span>
+                                <span class="block-value" id="val-simple-machine">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="post-details">
+                                <span class="block-title">Post Production</span>
+                                <span class="block-value" id="val-simple-post">₱0.00</span>
+                            </div>
+                        </div>
+                        <div class="multiplier-group">
+                            <div class="operator">×</div>
+                            <div class="formula-block markup-block" data-target="markup-details">
+                                <span class="block-title">Markup</span>
+                                <span class="block-value" id="val-simple-markup">2x</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formula-row">
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="services-details">
+                            <span class="block-title">Service &amp; Delivery</span>
+                            <span class="block-value" id="val-simple-services">₱0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expanded View -->
+                <div id="expanded-formula" class="formula-view">
+                    <div class="formula-row wrap">
+                        <div class="bracket-group">
+                            <div class="formula-block" data-target="exp-maint">
+                                <span class="block-title">Maintenance</span>
+                                <span class="block-value" id="val-exp-maint">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="exp-life">
+                                <span class="block-title">Lifetime</span>
+                                <span class="block-value" id="val-exp-life">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="exp-elec">
+                                <span class="block-title">Electricity</span>
+                                <span class="block-value" id="val-exp-elec">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="exp-fil">
+                                <span class="block-title">Filament</span>
+                                <span class="block-value" id="val-exp-fil">₱0.00</span>
+                            </div>
+                            <div class="operator">+</div>
+                            <div class="formula-block" data-target="exp-post">
+                                <span class="block-title">Post-Prod</span>
+                                <span class="block-value" id="val-exp-post">₱0.00</span>
+                            </div>
+                        </div>
+                        <div class="multiplier-group">
+                            <div class="operator">×</div>
+                            <div class="formula-block markup-block" data-target="markup-details">
+                                <span class="block-title">Markup</span>
+                                <span class="block-value" id="val-exp-markup">2.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formula-row wrap">
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="exp-fail">
+                            <span class="block-title">Failure</span>
+                            <span class="block-value" id="val-exp-fail">₱0.00</span>
+                        </div>
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="exp-pkg">
+                            <span class="block-title">Packaging</span>
+                            <span class="block-value" id="val-exp-pkg">₱0.00</span>
+                        </div>
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="exp-ship">
+                            <span class="block-title">Shipment</span>
+                            <span class="block-value" id="val-exp-ship">₱0.00</span>
+                        </div>
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="exp-prep">
+                            <span class="block-title">Prep Time</span>
+                            <span class="block-value" id="val-exp-prep">₱0.00</span>
+                        </div>
+                        <div class="operator">+</div>
+                        <div class="formula-block" data-target="exp-design">
+                            <span class="block-title">Design Time</span>
+                            <span class="block-value" id="val-exp-design">₱0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-price-container">
+                    <h2>Total Price</h2>
+                    <div class="total-amount" id="total-price">₱0.00</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Slide-out Panel for Details -->
+        <div id="details-panel" class="side-panel">
+            <div class="panel-header">
+                <h2 id="details-title">Details</h2>
+                <button class="close-details-btn" aria-label="Close Details">&times;</button>
+            </div>
+            <div class="panel-content">
+                <p id="details-description" class="details-desc"></p>
+                <div class="formula-box">
+                    <strong>Formula:</strong>
+                    <code id="details-formula"></code>
+                </div>
+                <div id="details-body" class="details-list"></div>
+            </div>
+        </div>
+
+        <div id="panel-overlay" class="overlay"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
