@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'post-details': {
                 title: 'Post Production',
-                desc: 'The cost for post-processing the print, such as support removal, sanding, or painting.',
+                desc: 'Covers the cost of post-production such as support removal, painting, and sanding. This also covers the materials used for the processes mentioned.',
                 formula: 'Post-Production Rate (₱/hr) × Time Spent',
                 data: [
                     { label: 'Post-Prod Rate', val: formatCurrency(RATES.post) + '/hr' },
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'markup-details': {
                 title: 'Markup Multiplier',
-                desc: 'Applied to materials, machine runtime, and post-processing to cover business overhead, taxes, and profit margin.',
+                desc: 'Costs to cover business overhead, taxes, and profit margin.',
                 formula: 'Markup × (Material + Machine + Post)',
                 data: [
                     { label: 'Multiplier', val: RATES.markup + 'x' },
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-maint': {
                 title: 'Maintenance Cost',
-                desc: 'Covers wear and tear items like nozzles, belts, and regular machine upkeep.',
+                desc: 'Covers consumable equipment items like nozzles, belts, and lubricants to ensure smooth operation and minimal service time.',
                 formula: 'Maintenance Rate × Print Hours',
                 data: [
                     { label: 'Rate', val: formatCurrency(RATES.maint) + '/hr' },
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-life': {
                 title: 'Machine Lifetime Depreciation',
-                desc: 'Recoups the initial cost of the 3D printer over its expected operational lifespan.',
+                desc: 'Covers the initial cost of the 3D printer over its expected operational lifespan. This can also be used for the expansion of our services ',
                 formula: 'Lifetime Rate × Print Hours',
                 data: [
                     { label: 'Rate', val: formatCurrency(RATES.life) + '/hr' },
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-elec': {
                 title: 'Electricity Cost',
-                desc: 'The estimated power consumption cost of running the printer and heated bed.',
+                desc: "covers the machines' electricity cost for equipments such as 3D printers, computers, and internet connection.,
                 formula: 'Electricity Rate × Print Hours',
                 data: [
                     { label: 'Rate', val: formatCurrency(RATES.elec) + '/hr' },
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-fil': {
                 title: 'Filament Cost',
-                desc: 'Direct cost of the raw plastic used.',
+                desc: 'Covers the cost of 3D printing filament',
                 formula: 'Filament Rate × Filament Used',
                 data: [
                     { label: 'Rate', val: formatCurrency(RATES.fil) + '/g' },
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-post': {
                 title: 'Post-Production',
-                desc: 'Labor cost for cleaning up the final print.',
+                desc: 'Labor cost for cleaning up the final print. Also covers additional client requests such as sanding and painting.',
                 formula: 'Post-Prod Rate × Hours',
                 data: [
                     { label: 'Rate', val: formatCurrency(RATES.post) + '/hr' },
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'exp-ship': {
                 title: 'Shipment',
-                desc: 'Cost of postage and courier services.',
+                desc: 'Cost of postage and courier services. This fee is currently waived due to the lack of access to services.',
                 formula: 'Flat Shipping Cost',
                 data: [{ label: 'Cost', val: formatCurrency(RATES.ship) }],
             },
